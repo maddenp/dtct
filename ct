@@ -1,0 +1,5 @@
+#!/bin/ksh
+
+# Uses dt to show which files are identical or different, without a diff.
+
+dt "$1" "$2" nodiff

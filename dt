@@ -1,0 +1,52 @@
+#!/bin/ksh
+
+# Compares two (code) trees using difftool.
+
+difftool="xxdiff -D"
+
+es()      { print $1 | sed 's/\//\\\//g'; } # escape slashes
+fail()    { print -e "\n$1\n"; exit 1;    }
+missing() { print " $1 does not exist";   }
+ts()      { print $1 | sed 's/\/$//';     } # remove trailing slash
+
+list()
+{
+  find $1 -type f |\
+  grep -v -e '\.svn' -e '\.git' |\
+  sed "s/^$2//;s/^\///"
+}
+
+ok4diff()
+{
+  file -i $1 | grep -q ': text'
+  return $?
+}
+
+test -d "$1" -a -d "$2" || fail "usage: $(basename $0) dir1 dir2"
+
+d1=$(ts $1)
+d2=$(ts $2)
+
+print "\nComparing $d1 to $d2:\n"
+
+d1=$(es "$d1")
+d2=$(es "$d2")
+
+(list "$1" "$d1";list "$2" "$d2") | sort | uniq | while read x
+do
+ f1=$1/$x
+ f2=$2/$x
+ if [[ -f "$f1" && -f "$f2" ]]
+ then
+   cmp -s $f1 $f2 >/dev/null 2>&1 && ok=1 || ok=0
+   test $ok -eq 1 && print -n "    =     " || print -n "DIFFERENT "
+   print $x
+   test $ok -eq 0 -a -z "$3" && ok4diff $f1 && $difftool $f1 $f2
+ else
+   test -e $f1 && m2="$m2\n$x" || m1="$m1\n$x"
+ fi
+done
+
+test -n "$m1" && print "\nPresent only in $2:\n$m1"
+test -n "$m2" && print "\nPresent only in $1:\n$m2"
+print
