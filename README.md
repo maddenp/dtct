@@ -14,7 +14,3 @@ _ct_ calls _dt_ with the optional _nodiff_ argument to disable graphical diffs.
 ### Requirements
 
 _ksh_ and standard GNU shell utilities like _file_, _sed_, _uniq_, etc. If you don't like _ksh_, _dt_ and _ct_ could be trivially rewritten in _bash_.
-
-### License
-
-The contents of this repository are released under the [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0) license. See the LICENSE file for details.
