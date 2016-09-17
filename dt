@@ -18,8 +18,9 @@ list()
 
 ok4diff()
 {
-  file $1 | grep -qE 'text$'
-  return $?
+#   file $1 | grep -qE 'text$'
+#   return $?
+  return 0
 }
 
 test -d "$1" -a -d "$2" || fail "usage: $(basename $0) dir1 dir2"
