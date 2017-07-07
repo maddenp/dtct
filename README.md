@@ -15,4 +15,4 @@ TODO Fix binary-file checking.
 
 ### Requirements
 
-_ksh_ and standard GNU shell utilities like _file_, _sed_, _uniq_, etc. If you don't like _ksh_, _dt_ and _ct_ could be trivially rewritten in _bash_.
+_bash_ and standard GNU shell utilities like _file_, _sed_, _uniq_, etc.

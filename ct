@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/bash
 
 # Uses dt to show which files are identical or different, without a diff.
 
