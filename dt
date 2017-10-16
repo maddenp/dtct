@@ -33,12 +33,12 @@ echo -e "\nComparing $d1 to $d2:\n"
 d1=$(es "$d1")
 d2=$(es "$d2")
 
-(list "$1" "$d1";list "$2" "$d2") | sort | uniq | while read x
-do
+files=($((list "$1" "$d1" ; list "$2" "$d2") | sort | uniq))
+
+for x in ${files[@]}; do
  f1=$1/$x
  f2=$2/$x
- if [[ -f "$f1" && -f "$f2" ]]
- then
+ if [[ -f "$f1" && -f "$f2" ]]; then then
    cmp -s $f1 $f2 >/dev/null 2>&1 && ok=1 || ok=0
    test $ok -eq 1 && echo -n "    =     " || echo -n "DIFFERENT "
    echo $x
@@ -50,4 +50,5 @@ done
 
 test -n "$m1" && echo -e "\nPresent only in $2:\n$m1"
 test -n "$m2" && echo -e "\nPresent only in $1:\n$m2"
+
 echo
