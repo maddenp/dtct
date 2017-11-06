@@ -38,7 +38,7 @@ files=($((list "$1" "$d1" ; list "$2" "$d2") | sort | uniq))
 for x in ${files[@]}; do
  f1=$1/$x
  f2=$2/$x
- if [[ -f "$f1" && -f "$f2" ]]; then then
+ if [[ -f "$f1" && -f "$f2" ]]; then
    cmp -s $f1 $f2 >/dev/null 2>&1 && ok=1 || ok=0
    test $ok -eq 1 && echo -n "    =     " || echo -n "DIFFERENT "
    echo $x
